@@ -266,6 +266,76 @@ FadeOutMover = Mover.clone().newSlots({
 
 Movers.add(FadeOutMover)
 
+// ------------------------------------------------------------------
+
+LeapMotionBackgroundGreyMover = Mover.clone().newSlots({
+	protoType: "LeapMotionBackgroundGreyMover",
+}).setSlots({
+	init: function()
+	{
+		Mover.init.apply(this)
+	},
+	
+	object: function()
+	{
+		return this._thing._object
+	},
+	
+	update: function() 
+	{	
+		Mover.update.apply(this)
+		var hand = LeapMotion._hands[0]
+		if(typeof hand == "undefined") return
+		var x = hand.palmPosition[0];
+		var y = hand.palmPosition[1];
+		var z = hand.palmPosition[2];
+
+		var hue = 0;
+		var saturation = 0;
+		var lightness = Math.round(z/2);
+
+		document.body.style.background = "hsl(" + hue + "," + saturation + "%," + lightness + "%)";
+		//this._t ++	
+	}
+})
+
+Movers.add(LeapMotionBackgroundGreyMover)
+
+// ------------------------------------------------------------------
+
+LeapMotionBackgroundHueMover = Mover.clone().newSlots({
+	protoType: "LeapMotionBackgroundHueMover",
+}).setSlots({
+	init: function()
+	{
+		Mover.init.apply(this)
+	},
+	
+	object: function()
+	{
+		return this._thing._object
+	},
+	
+	update: function() 
+	{	
+		Mover.update.apply(this)
+		var hand = LeapMotion._hands[0]
+		if(typeof hand == "undefined") return
+		var x = hand.palmPosition[0];
+		var y = hand.palmPosition[1];
+		var z = hand.palmPosition[2];
+
+		var hue = Math.round(x) % 360;
+		var saturation = Math.round(y/3);
+		var lightness = Math.round(z/2);
+
+		document.body.style.background = "hsl(" + hue + "," + saturation + "%," + lightness + "%)";
+		//this._t ++	
+	}
+})
+
+Movers.add(LeapMotionBackgroundHueMover)
+
 /*
 
 Movers.add(PulseAlphaMover)
