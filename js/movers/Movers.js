@@ -336,6 +336,50 @@ LeapMotionBackgroundHueMover = Mover.clone().newSlots({
 
 Movers.add(LeapMotionBackgroundHueMover)
 
+// ------------------------------------------------------------------
+
+LeapMotionBackgroundShadesMover = Mover.clone().newSlots({
+	protoType: "LeapMotionBackgroundShadesMover",
+	color: null,
+}).setSlots({
+	init: function()
+	{
+		Mover.init.apply(this)
+		this._color = $('body').css('background-color');
+	},
+	
+	object: function()
+	{
+		return this._thing._object
+	},
+	
+	update: function() 
+	{	
+		Mover.update.apply(this)
+		var hand = LeapMotion._hands[0]
+		if(typeof hand == "undefined") return
+		var x = hand.palmPosition[0];
+		var y = hand.palmPosition[1];
+		var z = hand.palmPosition[2];
+
+		var rgb = this._color.match(/rgb\(([0-9]*), ([0-9]*), ([0-9]*)\)/)
+		var r = rgb[1]
+		var g = rgb[2]
+		var b = rgb[3]
+		var hsl = Colors.rgb2hsl(r,g,b).a
+		console.log(hsl)
+
+		var hue = hsl[0]
+		var saturation = hsl[1]
+		var lightness = Math.round(z/2);
+
+		document.body.style.background = "hsl(" + hue + "," + saturation + "%," + lightness + "%)";
+		//this._t ++	
+	}
+})
+
+Movers.add(LeapMotionBackgroundShadesMover)
+
 /*
 
 Movers.add(PulseAlphaMover)
