@@ -9,7 +9,8 @@ Thing = Proto.clone().newSlots({
 	t: 0,
 	groupX: 0,
 	groupY: 0,
-	groupZ: 0
+	groupZ: 0,
+	group: null
 }).setSlots({
 	init: function()
 	{

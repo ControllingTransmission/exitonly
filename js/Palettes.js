@@ -13,9 +13,14 @@ Palette = Proto.clone().newSlots({
 		return new THREE.Color(this.colors()[1])
 	},
 	
-	highlight: function()
+	foreground2: function()
 	{
 		return new THREE.Color(this.colors()[2])
+	},
+	
+	highlight: function()
+	{
+		return new THREE.Color(this.colors()[3])
 	},	
 })
 
@@ -24,7 +29,6 @@ Palettes = Proto.clone().newSlots({
 	palettes: [],
 	index: 0
 }).setSlots({
-	
 	addPaletteWithColors: function(c)
 	{
 		this.addPalette(Palette.clone().setColors(c))
@@ -50,6 +54,6 @@ Palettes = Proto.clone().newSlots({
 })
 
 // back, fore, high
-//Palettes.addPaletteWithColors(["red", "black", "#ffffff"])
-Palettes.addPaletteWithColors(["#0c9ae2", "#010b10", "#f3c932"])
-Palettes.addPaletteWithColors(["#000000", "#ef0c59", "#5df856"])
+Palettes.addPaletteWithColors(["red", "black", "#222222", "#ffffff"])
+Palettes.addPaletteWithColors(["#0c9ae2", "#010b10", "gray", "#f3c932"])
+Palettes.addPaletteWithColors(["#000000", "#ef0c59", "gray", "#5df856"])

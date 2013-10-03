@@ -9,6 +9,37 @@ Movers = Mover.clone().newSlots({
 	}
 })	
 
+
+HighlightJitterColorMover = Mover.clone().newSlots({
+	protoType: "WhiteJitterColorMover",
+}).setSlots({
+	prepareToStop: function()
+	{
+		//this.revertColor()
+		this.setColor(new THREE.Color().setRGB(0, 0, 0))
+	},
+
+	update: function() 
+	{	
+		Mover.update.apply(this)
+		var c = Math.random()
+		if (Math.random() < .07)
+		{
+			//this.setColor(new THREE.Color().setRGB(2, 2, 2))
+			this.setColor(Palettes.current().highlight())
+			//console.log("set color ")
+		}
+		else
+		{
+			this.setColor(this.originalMaterial().color)
+		}
+		//this._t ++	
+	}
+})
+
+Movers.add(HighlightJitterColorMover)
+
+
 // -----------------------------------------------------
 
 SetAlphaMover = Mover.clone().newSlots({
@@ -28,6 +59,7 @@ SetAlphaMover = Mover.clone().newSlots({
 		{
 			var a = this.targetAlpha()
 			this.setOpacity(a)
+			this.thing().removeMover(this)
 		}
 		this._t ++	
 	}
@@ -98,35 +130,28 @@ Movers.add(RScaleMover)
 
 // -----------------------------------------------------
 
-HighlightJitterColorMover = Mover.clone().newSlots({
-	protoType: "WhiteJitterColorMover",
+
+ScaleToOneMover = Mover.clone().newSlots({
+	protoType: "ScaleToOneMover",
 }).setSlots({
+	init: function()
+	{
+		Mover.init.apply(this)
+	},
+	
 	prepareToStop: function()
 	{
-		//this.revertColor()
-		this.setColor(new THREE.Color().setRGB(0, 0, 0))
+		this.object().scale = this.originalScale()
 	},
 
 	update: function() 
 	{	
 		Mover.update.apply(this)
-		var c = Math.random()
-		if (Math.random() < .07)
-		{
-			//this.setColor(new THREE.Color().setRGB(2, 2, 2))
-			this.setColor(Palettes.current().highlight())
-			//console.log("set color ")
-		}
-		else
-		{
-			this.setColor(this.originalMaterial().color)
-		}
-		//this._t ++	
+		
+		this.object().scale[this.orientation()] = this.originalScale()
+		this._t ++
 	}
 })
-
-Movers.add(HighlightJitterColorMover)
-
 
 
 
