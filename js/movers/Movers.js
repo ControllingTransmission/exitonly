@@ -423,7 +423,6 @@ LeapMotionBackgroundShadesMover = Mover.clone().newSlots({
 		var g = rgb[2]
 		var b = rgb[3]
 		var hsl = Colors.rgb2hsl(r,g,b).a
-		console.log(hsl)
 
 		var hue = hsl[0]
 		var saturation = hsl[1]
