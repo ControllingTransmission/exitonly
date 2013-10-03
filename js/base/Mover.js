@@ -55,9 +55,8 @@ Mover = Proto.clone().newSlots({
 	
 	setOpacity: function(v)
 	{
-		var mat = this.object().material
-		mat.opacity = Math.sin(v)
-		mat.needsUpdate = true
+		this.thing().setOpacity(v)
+		return this
 	},
 		
 	prepareToStop: function()

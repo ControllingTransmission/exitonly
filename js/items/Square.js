@@ -14,7 +14,8 @@ Square = Thing.clone().newSlots({
 		
 		var material = new THREE.MeshLambertMaterial( 
 			{
-				color: new THREE.Color().setRGB(0,0,0), 
+				//color: new THREE.Color().setRGB(0,0,0), 
+				color: Palettes.current().foreground(), 
 				wireframe: false, 
 				wireframeLinewidth: 36,
 				opacity: 1,

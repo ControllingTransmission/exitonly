@@ -155,6 +155,7 @@ MoveOverGroup = Group.clone().newSlots({
 			var s = Square.clone()
 			s._object.scale.x = .1*Math.random()
 			s._object.position.x = -.51
+			s._object.position.z = Math.random()*.1
 			s.setGroupX(x).setGroupY(0)
 			var m = XMover.clone()
 			m.setSpeed(m.speed() + m.speed()*Math.random())
@@ -194,7 +195,10 @@ MoveOverLeftGroup = Group.clone().newSlots({
 			var s = Square.clone()
 			s._object.scale.x = .1*Math.random()
 			s._object.position.x = .51
+			s._object.position.z = Math.random()*.1
 			s.setGroupX(x).setGroupY(0)
+			//s.setColor(new THREE.Color().setRGB(.1, .1, .1))
+			s.setOpacity(.1) //Math.random())
 			var m = XMover.clone()
 			m.setSpeed(-(m.speed() + m.speed()*Math.random()))
 			s.setMover("r", m)

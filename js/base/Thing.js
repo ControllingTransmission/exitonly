@@ -16,6 +16,19 @@ Thing = Proto.clone().newSlots({
 		this._movers = {}
 	},
 	
+	opacity: function()
+	{
+		return this.object().material.opacity
+	},
+	
+	setOpacity: function(v)
+	{
+		var mat = this.object().material
+		mat.opacity = v
+		mat.needsUpdate = true
+		return this
+	},
+	
 	setGroupPosToCurrent: function()
 	{
 		this.setGroupPos(this.object().position.clone())
