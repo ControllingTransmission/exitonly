@@ -9,6 +9,65 @@ Movers = Mover.clone().newSlots({
 	}
 })	
 
+
+HighlightJitterColorMover = Mover.clone().newSlots({
+	protoType: "WhiteJitterColorMover",
+}).setSlots({
+	prepareToStop: function()
+	{
+		//this.revertColor()
+		this.setColor(new THREE.Color().setRGB(0, 0, 0))
+	},
+
+	update: function() 
+	{	
+		Mover.update.apply(this)
+		var c = Math.random()
+		if (Math.random() < .07)
+		{
+			//this.setColor(new THREE.Color().setRGB(2, 2, 2))
+			this.setColor(Palettes.current().highlight())
+			//console.log("set color ")
+		}
+		else
+		{
+			this.setColor(this.originalMaterial().color)
+		}
+		//this._t ++	
+	}
+})
+
+Movers.add(HighlightJitterColorMover)
+
+
+// -----------------------------------------------------
+
+SetAlphaMover = Mover.clone().newSlots({
+	protoType: "SetAlphaMover",
+	targetAlpha: 0
+}).setSlots({
+	prepareToStart: function()
+	{
+		this.setTargetAlpha(.5*Math.random())
+		//this.setColor(new THREE.Color().setRGB(0, 0, 0))
+	},
+
+	update: function() 
+	{	
+		//Mover.update.apply(this)
+		if (this.t() == 1)
+		{
+			var a = this.targetAlpha()
+			this.setOpacity(a)
+			this.thing().removeMover(this)
+		}
+		this._t ++	
+	}
+})
+
+Movers.add(SetAlphaMover)
+
+
 // -----------------------------------------------------
 
 ScaleMover = Mover.clone().newSlots({
@@ -71,32 +130,29 @@ Movers.add(RScaleMover)
 
 // -----------------------------------------------------
 
-WhiteJitterColorMover = Mover.clone().newSlots({
-	protoType: "WhiteJitterColorMover",
+
+ScaleToOneMover = Mover.clone().newSlots({
+	protoType: "ScaleToOneMover",
 }).setSlots({
+	init: function()
+	{
+		Mover.init.apply(this)
+	},
+	
 	prepareToStop: function()
 	{
-		//this.revertColor()
-		this.setColor(new THREE.Color().setRGB(0, 0, 0))
+		this.object().scale = this.originalScale()
 	},
 
 	update: function() 
 	{	
 		Mover.update.apply(this)
-		var c = Math.random()
-		if (Math.random() < .07)
-		{
-			this.setColor(new THREE.Color().setRGB(2, 2, 2))
-		}
-		else
-		{
-			this.setColor(this.originalMaterial().color)
-		}
-		//this._t ++	
+		
+		this.object().scale[this.orientation()] = this.originalScale()
+		this._t ++
 	}
 })
 
-Movers.add(WhiteJitterColorMover)
 
 
 /*
@@ -186,7 +242,7 @@ XMover = Mover.clone().newSlots({
 		var direction = this.thing().groupY() % 2 == 0 ? 1 : -1
 		this.position().x += direction * this.speed()
 		this._t ++	
-		this.wrapBounds()
+		//if (this.position().x < -1)
 	}
 })
 

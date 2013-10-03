@@ -20,7 +20,7 @@ Visual = Proto.clone().newSlots({
 		return this
 	},
 	
-	removeLayer: function(aGroup)
+	removeGroup: function(aGroup)
 	{
 		for (var k in this.layers())
 		{

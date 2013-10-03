@@ -23,6 +23,7 @@ Group = Thing.clone().newSlots({
 	addItem: function(item)
 	{
 		item.setGroupPosToCurrent()
+		item.setGroup(this)
 		this._items.push(item)
 		this._object.add(item.object())
 	},

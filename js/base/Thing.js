@@ -9,11 +9,25 @@ Thing = Proto.clone().newSlots({
 	t: 0,
 	groupX: 0,
 	groupY: 0,
-	groupZ: 0
+	groupZ: 0,
+	group: null
 }).setSlots({
 	init: function()
 	{
 		this._movers = {}
+	},
+	
+	opacity: function()
+	{
+		return this.object().material.opacity
+	},
+	
+	setOpacity: function(v)
+	{
+		var mat = this.object().material
+		mat.opacity = v
+		mat.needsUpdate = true
+		return this
 	},
 	
 	setGroupPosToCurrent: function()
