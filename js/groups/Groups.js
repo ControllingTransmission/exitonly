@@ -162,7 +162,7 @@ MegaMiddleGroup = Group.clone().newSlots({
 	items: null,
 	orientation: "x",
 	key: "4",
-	resets: true
+	resets: false
 }).setSlots({
 	init: function()
 	{

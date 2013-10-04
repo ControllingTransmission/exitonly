@@ -127,8 +127,8 @@ Group = Thing.clone().newSlots({
 		// color
 		var colorKeys = {
 			"Z": GrayColor(0), 
-			"X": new THREE.Color().setRGB(255, 0, 0), 
-			"C": new THREE.Color().setRGB(0, 0, 255), 
+			"X": new THREE.Color("#0ff"), 
+			"C": new THREE.Color("#f0f"), 
 			"V": GrayColor(.3), 
 			"B": null, 
 			"N": null, 
