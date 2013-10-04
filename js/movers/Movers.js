@@ -150,7 +150,6 @@ Movers.add(RScaleMover)
 
 ScaleToOneMover = Mover.clone().newSlots({
 	protoType: "ScaleToOneMover",
-	t: 0
 }).setSlots({
 	prepareToStart: function()
 	{
@@ -164,7 +163,7 @@ ScaleToOneMover = Mover.clone().newSlots({
 
 	update: function() 
 	{	
-		Mover.update.apply(this)
+		//Mover.update.apply(this)
 		
 		var v = 1 - 60/(60 + this._t) // zero to one
 		console.log("s " + v + " t " +this._t)
@@ -251,6 +250,7 @@ XInterleveMover = Mover.clone().newSlots({
 XMover = Mover.clone().newSlots({
 	protoType: "YInterleveMover",
 	speed: .001,
+	wraps: true
 }).setSlots({
 	prepareToStop: function()
 	{
@@ -262,7 +262,19 @@ XMover = Mover.clone().newSlots({
 		var direction = this.thing().groupY() % 2 == 0 ? 1 : -1
 		this.position().x += direction * this.speed()
 		this._t ++	
-		//if (this.position().x < -1)
+		
+		if (this.wraps())
+		{
+			if (this.position().x < -1)
+			{
+				this.position().x = 1
+			}
+			
+			if (this.position().x > 1)
+			{
+				this.position().x = -1
+			}
+		}
 	}
 })
 
