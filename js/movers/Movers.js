@@ -148,7 +148,12 @@ ScaleToOneMover = Mover.clone().newSlots({
 	{	
 		Mover.update.apply(this)
 		
-		this.object().scale[this.orientation()] = this.originalScale()
+		var v = 1 - 60/(60 + this._t) // zero to one
+		
+		if (this._t < 60)
+		{
+			this.object().scale[this.orientation()] = this.originalScale()
+		}
 		this._t ++
 	}
 })
