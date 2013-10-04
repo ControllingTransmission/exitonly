@@ -205,15 +205,12 @@ Visual = Proto.clone().newSlots({
 	{
 	    var k = this.keyForKeyCode(e.keyCode);
 		e.key = k
-		
-		var knum = parseInt(k)
 
-		//console.log("e.keyCode: " + e.keyCode + " " + e.key)
-
-		if (isNaN(knum) == false)
+		var g = Groups.groupWithKey(k)
+		console.log("group with key " + k + " = " + g)
+		if (g)
 		{
-			var group = Groups.groups()[knum]
-			this.toggleLayer(knum, group)
+			this.toggleLayer(k, g)
 			return true
 		}
 		

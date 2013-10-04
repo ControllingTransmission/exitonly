@@ -7,8 +7,26 @@ Groups = Proto.clone().newSlots({
 	add: function(g)
 	{
 		this.groups().push(g)
+	},
+	
+	groupWithKey: function(k)
+	{
+		for (var i = 0; i < this.groups().length; i ++)
+		{
+			var g = this.groups()[i]
+			if (g.key() == k)
+			{
+				return g
+			}
+		}
+		return null
 	}
 })
+
+
+
+
+// ----------------------
 
 SquaresGroup = Group.clone().newSlots({
 	protoType: "SquaresGroup",
@@ -17,7 +35,8 @@ SquaresGroup = Group.clone().newSlots({
 	itemXScale: 1,
 	itemYScale: 1,
 	max: 5,
-	orientation: "x"
+	orientation: "x",
+	key: "1"
 }).setSlots({
 	init: function()
 	{
@@ -52,6 +71,52 @@ Groups.add(SquaresGroup)
 
 // -----------------------------------------------------
 
+SpreadGroup = Group.clone().newSlots({
+	protoType: "SpreadGroup",
+	items: null,
+	spacing: 500,
+	itemXScale: 1,
+	itemYScale: 1,
+	max: 5,
+	orientation: "x",
+	key: "2"
+}).setSlots({
+	init: function()
+	{
+		Group.init.apply(this)
+		this.addSquares()
+		console.log("both")
+	},
+	
+	addSquares: function()
+	{
+		var max = Math.randomInt(2,50)
+		
+		for (var x = 0; x < max; x ++)
+		{
+			var s = Square.clone()
+			s._object.scale.x = .1*Math.random()
+			s._object.position.x = 0
+			s._object.position.z = Math.random()*.1
+			s.setGroupX(x).setGroupY(0)
+			//s.setColor(new THREE.Color().setRGB(.1, .1, .1))
+			s.setOpacity(.1) //Math.random())
+			var m = XMover.clone()
+		
+			m.setSpeed(2*m.speed()*(Math.random()-.5))
+			//s.setMover("r", m)
+			s.setMover("_", ScaleToOneMover.clone())
+			this.addItem(s)
+		}
+	},
+	
+})
+
+Groups.add(SpreadGroup)
+
+
+// -----------------------------------------------------
+
 ThinSquaresGroup = Group.clone().newSlots({
 	protoType: "ThinSquaresGroup",
 	items: null,
@@ -59,7 +124,8 @@ ThinSquaresGroup = Group.clone().newSlots({
 	itemXScale: 1,
 	itemYScale: 1,
 	max: 5,
-	orientation: "x"
+	orientation: "x",
+	key: "3"
 }).setSlots({
 	init: function()
 	{
@@ -93,34 +159,52 @@ Groups.add(ThinSquaresGroup)
 MegaMiddleGroup = Group.clone().newSlots({
 	protoType: "MegaMiddleGroup",
 	items: null,
-	orientation: "x"
+	orientation: "x",
+	key: "4"
 }).setSlots({
 	init: function()
 	{
 		Group.init.apply(this)
-		this.addSquares()
+		this.addSquare1()
 	},
 	
-	addSquares: function()
+	addSquare1: function()
 	{
 		var s = Square.clone()
 		s._object.scale.x = 0
 		s._object.scale.y = 1
-		s._object.position.z = -1*Math.random()
+		s._object.position.z = -1
 		s._object.position.x = 0
 		s._object.position.y = 0
 		s.setGroupX(0).setGroupY(0)
 		s.setColor(Palettes.current().foreground2())
+		this._square1 = s
+		this.addItem(s)
+	},
+	
+	addSquare2: function()
+	{
+		var s = Square.clone()
+		s._object.scale.x = 0
+		s._object.scale.y = 1
+		s._object.position.z = -.9
+		s._object.position.x = 0
+		s._object.position.y = 0
+		s.setGroupX(0).setGroupY(0)
+		s.setColor(Palettes.current().background())
+		this._square2 = s
 		this.addItem(s)
 	},
 	
 	update: function()
 	{
-		if (this._t > 30)
+		this._square1.object().scale.x += .01
+		
+		if (this._square2)
 		{
-			this.items()[0].object().position.x += .01
+			this._square2.object().scale.x += .01
 		}
-		this.items()[0].object().scale.x += .01
+		
 		this._t ++ 
 	}
 	
@@ -139,7 +223,8 @@ MegaGroup = Group.clone().newSlots({
 	itemXScale: 1,
 	itemYScale: 1,
 	max: 5,
-	orientation: "x"
+	orientation: "x",
+	key: "5"
 }).setSlots({
 	init: function()
 	{
@@ -181,7 +266,8 @@ MoveOverGroup = Group.clone().newSlots({
 	itemXScale: 1,
 	itemYScale: 1,
 	max: 5,
-	orientation: "x"
+	orientation: "x",
+	key: "6"
 }).setSlots({
 	init: function()
 	{
@@ -221,7 +307,8 @@ MoveOverLeftGroup = Group.clone().newSlots({
 	itemXScale: 1,
 	itemYScale: 1,
 	max: 5,
-	orientation: "x"
+	orientation: "x",
+	key: "7"
 }).setSlots({
 	init: function()
 	{
@@ -255,48 +342,6 @@ MoveOverLeftGroup = Group.clone().newSlots({
 Groups.add(MoveOverLeftGroup)
 
 
-// -----------------------------------------------------
-
-SpreadGroup = Group.clone().newSlots({
-	protoType: "SpreadGroup",
-	items: null,
-	spacing: 500,
-	itemXScale: 1,
-	itemYScale: 1,
-	max: 5,
-	orientation: "x"
-}).setSlots({
-	init: function()
-	{
-		Group.init.apply(this)
-		this.addSquares()
-		console.log("both")
-	},
-	
-	addSquares: function()
-	{
-		var max = Math.randomInt(2,50)
-		
-		for (var x = 0; x < max; x ++)
-		{
-			var s = Square.clone()
-			s._object.scale.x = .1*Math.random()
-			s._object.position.x = 0
-			s._object.position.z = Math.random()*.1
-			s.setGroupX(x).setGroupY(0)
-			//s.setColor(new THREE.Color().setRGB(.1, .1, .1))
-			s.setOpacity(.1) //Math.random())
-			var m = XMover.clone()
-		
-			m.setSpeed(2*m.speed()*(Math.random()-.5))
-			s.setMover("r", m)
-			this.addItem(s)
-		}
-	},
-	
-})
-
-Groups.add(SpreadGroup)
 
 // -----------------------------------------------------
 
@@ -307,7 +352,8 @@ ScatterGroup = Group.clone().newSlots({
 	itemXScale: 1,
 	itemYScale: 1,
 	max: 5,
-	orientation: "x"
+	orientation: "x",
+	key: "8"
 }).setSlots({
 	init: function()
 	{
@@ -333,7 +379,7 @@ ScatterGroup = Group.clone().newSlots({
 		//	s.setColor(Palettes.current().highlight())
 			s.setColor(new THREE.Color("#222222"))
 			//s.setOpacity(.1)
-			//s.setMover("r", HighlightJitterColorMover.clone())
+			//s.setMover("r", ScaleToOneMover.clone())
 			this.addItem(s)
 		}
 	},

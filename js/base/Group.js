@@ -12,7 +12,8 @@ Group = Thing.clone().newSlots({
 	items: null,
 	isPaused: false,
 	rate: 1,
-	owner: null
+	owner: null,
+	key: null
 }).setSlots({
 	init: function()
 	{
@@ -163,7 +164,8 @@ Group = Thing.clone().newSlots({
 			return
 		}		
 		
-		var moverProto = this.moverKeyMap()[e.key]
+		//var moverProto = this.moverKeyMap()[e.key]
+		var moverProto = Movers.moverWithKey(e.key)
 		
 		if (moverProto)
 		{

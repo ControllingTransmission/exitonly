@@ -6,12 +6,26 @@ Movers = Mover.clone().newSlots({
 	add: function(m)
 	{
 		this.movers().append(m)
+	},
+	
+	moverWithKey: function(k)
+	{
+		var items = this.movers()
+		for (var i = 0; i < items.length; i ++)
+		{
+			var g = items[i]
+			if (g.key() == k)
+			{
+				return g
+			}
+		}
+		return null
 	}
 })	
 
-
 HighlightJitterColorMover = Mover.clone().newSlots({
 	protoType: "WhiteJitterColorMover",
+	key: "Q"
 }).setSlots({
 	prepareToStop: function()
 	{
@@ -44,7 +58,8 @@ Movers.add(HighlightJitterColorMover)
 
 SetAlphaMover = Mover.clone().newSlots({
 	protoType: "SetAlphaMover",
-	targetAlpha: 0
+	targetAlpha: 0,
+	key: "W"
 }).setSlots({
 	prepareToStart: function()
 	{
@@ -72,6 +87,7 @@ Movers.add(SetAlphaMover)
 
 ScaleMover = Mover.clone().newSlots({
 	protoType: "ScaleMover",
+	key: "E"
 }).setSlots({
 	init: function()
 	{
@@ -107,6 +123,7 @@ Movers.add(ScaleMover)
 
 RScaleMover = Mover.clone().newSlots({
 	protoType: "RScaleMover",
+	key: "R"
 }).setSlots({
 	init: function()
 	{
@@ -133,10 +150,11 @@ Movers.add(RScaleMover)
 
 ScaleToOneMover = Mover.clone().newSlots({
 	protoType: "ScaleToOneMover",
+	t: 0
 }).setSlots({
-	init: function()
+	prepareToStart: function()
 	{
-		Mover.init.apply(this)
+		this._t = 0
 	},
 	
 	prepareToStop: function()
@@ -149,16 +167,13 @@ ScaleToOneMover = Mover.clone().newSlots({
 		Mover.update.apply(this)
 		
 		var v = 1 - 60/(60 + this._t) // zero to one
-		
-		if (this._t < 60)
-		{
-			this.object().scale[this.orientation()] = this.originalScale()
-		}
+		console.log("s " + v + " t " +this._t)
+		var o = this.orientation()
+		//this.object().scale.x = v*this.originalScale().x
+		this.object().scale.x = .001
 		this._t ++
 	}
 })
-
-
 
 /*
 BlueJitterColorMover = Mover.clone().newSlots({
@@ -280,6 +295,7 @@ Movers.add(RandXMover)
 
 RandAlphaMover = Mover.clone().newSlots({
 	protoType: "RandAlphaMover",
+	key: "T"
 }).setSlots({
 	
 	prepareToStop: function()

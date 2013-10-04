@@ -8,7 +8,8 @@ Mover = Proto.clone().newSlots({
 	originalPosition: null,
 	originalScale: null,
 	originalMaterial: null,
-	orientation: "x"
+	orientation: "x",
+	key: null
 }).setSlots({
 	init: function()
 	{
