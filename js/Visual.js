@@ -71,7 +71,7 @@ Visual = Proto.clone().newSlots({
 		//this.addLayer(SquaresGroup.clone().open())
 		
 		this.animate()	
-		document.body.style.backgroundColor = "red"
+		// document.body.style.backgroundColor = "red"
 	},
 
 	setup: function()

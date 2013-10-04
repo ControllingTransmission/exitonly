@@ -24,7 +24,7 @@ Movers = Mover.clone().newSlots({
 })	
 
 HighlightJitterColorMover = Mover.clone().newSlots({
-	protoType: "WhiteJitterColorMover",
+	protoType: "HighlightJitterColorMover",
 	key: "Q"
 }).setSlots({
 	prepareToStop: function()
@@ -360,6 +360,7 @@ Movers.add(FadeOutMover)
 
 LeapMotionBackgroundGreyMover = Mover.clone().newSlots({
 	protoType: "LeapMotionBackgroundGreyMover",
+	key: "A",
 }).setSlots({
 	init: function()
 	{
@@ -395,6 +396,7 @@ Movers.add(LeapMotionBackgroundGreyMover)
 
 LeapMotionBackgroundHueMover = Mover.clone().newSlots({
 	protoType: "LeapMotionBackgroundHueMover",
+	key: "S",
 }).setSlots({
 	init: function()
 	{
@@ -431,6 +433,7 @@ Movers.add(LeapMotionBackgroundHueMover)
 LeapMotionBackgroundShadesMover = Mover.clone().newSlots({
 	protoType: "LeapMotionBackgroundShadesMover",
 	color: null,
+	key: "D",
 }).setSlots({
 	init: function()
 	{
