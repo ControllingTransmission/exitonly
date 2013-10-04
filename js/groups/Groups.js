@@ -36,7 +36,7 @@ SquaresGroup = Group.clone().newSlots({
 	itemYScale: 1,
 	max: 5,
 	orientation: "x",
-	key: "1"
+	key: "P"
 }).setSlots({
 	init: function()
 	{
@@ -95,17 +95,18 @@ SpreadGroup = Group.clone().newSlots({
 		for (var x = 0; x < max; x ++)
 		{
 			var s = Square.clone()
-			s._object.scale.x = .1*Math.random()
+			s._object.scale.x = .001
 			s._object.position.x = 0
 			s._object.position.z = Math.random()*.1
 			s.setGroupX(x).setGroupY(0)
 			//s.setColor(new THREE.Color().setRGB(.1, .1, .1))
-			s.setOpacity(.1) //Math.random())
+			s.setOpacity(1) //Math.random())
 			var m = XMover.clone()
 		
 			m.setSpeed(2*m.speed()*(Math.random()-.5))
-			//s.setMover("r", m)
-			s.setMover("_", ScaleToOneMover.clone())
+			s.setMover("r", m)
+			//s.setMover("_", ScaleToOneMover.clone())
+			s.setMover("_", FadeOutMover.clone())
 			this.addItem(s)
 		}
 	},
@@ -125,7 +126,7 @@ ThinSquaresGroup = Group.clone().newSlots({
 	itemYScale: 1,
 	max: 5,
 	orientation: "x",
-	key: "3"
+	key: "1"
 }).setSlots({
 	init: function()
 	{
@@ -160,7 +161,8 @@ MegaMiddleGroup = Group.clone().newSlots({
 	protoType: "MegaMiddleGroup",
 	items: null,
 	orientation: "x",
-	key: "4"
+	key: "4",
+	resets: true
 }).setSlots({
 	init: function()
 	{
@@ -185,26 +187,46 @@ MegaMiddleGroup = Group.clone().newSlots({
 	addSquare2: function()
 	{
 		var s = Square.clone()
-		s._object.scale.x = 0
+		s._object.scale.x = .0001
 		s._object.scale.y = 1
-		s._object.position.z = -.9
+		s._object.position.z = -.5
 		s._object.position.x = 0
 		s._object.position.y = 0
 		s.setGroupX(0).setGroupY(0)
-		s.setColor(Palettes.current().background())
+		s.setOpacity(1)
+	//	s.setColor(Palettes.current().background())
+		s.setColor(new THREE.Color().setRGB(1,0,0))
 		this._square2 = s
 		this.addItem(s)
 	},
 	
 	update: function()
 	{
+		this.updateItems()
 		this._square1.object().scale.x += .01
 		
+		if (this._t == 120)
+		{
+			console.log("add fade out")
+			this._square1.setMover("a", FadeOutMover.clone())
+			this.addSquare2()
+		}
+
 		if (this._square2)
 		{
 			this._square2.object().scale.x += .01
 		}
 		
+		if (this._t == 240)
+		{
+			this._square2.setMover("a", FadeOutMover.clone())
+		}	
+
+		if (this._t == 300)
+		{
+			this.removeItem(this._square1)
+			this.removeItem(this._square2)
+		}		
 		this._t ++ 
 	}
 	

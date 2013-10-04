@@ -41,17 +41,26 @@ Visual = Proto.clone().newSlots({
 				layer.close()
 				delete this.layers()[name]
 				this.setSelectedLayer(null)
+				if (layer.resets())
+				{
+					this.turnOnGroup(name, aGroup)
+				}
 			}
 			else
 			{
-				var g = aGroup.clone().open()
-				g.setOwner(this)
-				this.layers()[name] = g
-				this.setSelectedLayer(g)
+				this.turnOnGroup(name, aGroup)
 			}
 		}
 		
 		return this
+	},
+	
+	turnOnGroup: function(name, aGroup)
+	{
+		var g = aGroup.clone().open()
+		g.setOwner(this)
+		this.layers()[name] = g
+		this.setSelectedLayer(g)		
 	},
 	
 	run: function()

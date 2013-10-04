@@ -331,7 +331,8 @@ FadeOutMover = Mover.clone().newSlots({
 	
 	update: function() 
 	{	
-		var v = 40/(40+this.t()*this.t())
+		var period = 400
+		var v = period/(period+this.t()*this.t())
 		this.setOpacity(v)
 		if (v < .0001)
 		{

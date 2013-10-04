@@ -13,7 +13,8 @@ Group = Thing.clone().newSlots({
 	isPaused: false,
 	rate: 1,
 	owner: null,
-	key: null
+	key: null,
+	resets: false
 }).setSlots({
 	init: function()
 	{
@@ -41,6 +42,7 @@ Group = Thing.clone().newSlots({
 	{
 		this._items.remove(item)
 		this._object.remove(item.object())
+		item.close()
 	},
 
 	update: function() 
