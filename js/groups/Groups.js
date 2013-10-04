@@ -79,7 +79,7 @@ SpreadGroup = Group.clone().newSlots({
 	itemYScale: 1,
 	max: 5,
 	orientation: "x",
-	key: "2"
+	key: "5"
 }).setSlots({
 	init: function()
 	{
@@ -248,7 +248,7 @@ MegaGroup = Group.clone().newSlots({
 	itemYScale: 1,
 	max: 5,
 	orientation: "x",
-	key: "5"
+	key: "3"
 }).setSlots({
 	init: function()
 	{
